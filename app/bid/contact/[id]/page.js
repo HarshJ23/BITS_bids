@@ -209,7 +209,7 @@ return (
 
 
 {isChatOpen && shouldShowChat && (
-    <ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} />
+    <ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} sellerEmail={individualProduct.userCreatedEmailId} buyerEmail={individualBid.userCreatedEmailId} productId={individualProduct.id}/>
 )}
                 
     </div>

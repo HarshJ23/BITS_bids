@@ -147,11 +147,28 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
         return () => client && client.disconnect();
     }, [roomId]);
 
+    // const sendMessage = () => {
+    //     if (currentMessage.trim() !== "" && stompClient && roomId && session?.user?.email) {
+    //         const chatMessage = {
+    //             content: currentMessage,
+    //             senderUserEmail: session.user.email,
+    //             receiverUserEmail: session.user.email === sellerEmail ? buyerEmail : sellerEmail,
+    //             forProductId: productId,
+    //             roomId: roomId,
+    //             type: 'CHAT'
+    //         };
+    //         console.log('Sending Message:', chatMessage);
+    //         stompClient.send(`/app/chat/${roomId}/send`, {}, JSON.stringify(chatMessage));
+    //         displayMessage(currentMessage, session.user.email);
+    //         setCurrentMessage('');
+    //     }
+    // };
+
     const sendMessage = () => {
         if (currentMessage.trim() !== "" && stompClient && roomId && session?.user?.email) {
             const chatMessage = {
                 content: currentMessage,
-                senderUserEmail: session.user.email,
+                senderUserEmail: session.user.email, // This is the email of the current user
                 receiverUserEmail: session.user.email === sellerEmail ? buyerEmail : sellerEmail,
                 forProductId: productId,
                 roomId: roomId,
@@ -159,8 +176,7 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
             };
             console.log('Sending Message:', chatMessage);
             stompClient.send(`/app/chat/${roomId}/send`, {}, JSON.stringify(chatMessage));
-            displayMessage(currentMessage, session.user.email);
-            setCurrentMessage('');
+            setCurrentMessage(''); // Clear the input after sending the message
         }
     };
 

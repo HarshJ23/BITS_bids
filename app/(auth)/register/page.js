@@ -21,13 +21,18 @@ import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
 export default function Register() {
-  const router = useRouter();
-  const { data: session } = useSession();
-    console.log(session);
+  // const router = useRouter();
+  // const { data: session } = useSession();
+  //   console.log(session);
+  //   const isLoading = status === "loading"; 
     
+    const router = useRouter();
+    const { data: session, status } = useSession();
+    const isLoading = status === "loading";
+
     const initialFormData = {
-        name: session?.user?.name || "",
-        email: session?.user?.email || "",
+        name: "",
+        email: "",
         password: "",
         phoneNumber: "",
         address: "",
@@ -35,102 +40,85 @@ export default function Register() {
 
     const [formData, setFormData] = useState(initialFormData);
     const [userExists, setUserExists] = useState(false);
-    const [toastShown, setToastShown] = useState(false);
 
-
+    // Check if user exists whenever email changes
     useEffect(() => {
-        if (session) {
-            setFormData({
-                ...formData,
-                name: session.user.name,
-                email: session.user.email,
-            });
-            console.log(formData.email);
-        }
+        if (!formData.email) return;
+        checkUserExists(formData.email);
+    }, [formData.email]);
+
+    // Redirect logic based on session
+    useEffect(() => {
+        if (isLoading) return; // Prevent effect from running when session status is loading
         if (!session) {
-          toast.error('You must be signed in to access the register page.')
-            
-          // setToastShown(true);
-        router.push('/signin');
+            toast.error('You must be signed in to access the register page.');
+            router.push('/signin');
+            return;
         }
-    }, [session]);
-  // const [isPasswordVisible, setPasswordVisible] = useState(false);
-
-  const isFormValid =
-    formData.name &&
-    formData.email &&
-    formData.password &&
-    formData.phoneNumber &&
-    formData.address &&
-    /.+@hyderabad\.bits-pilani\.ac\.in$/.test(formData.email);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-
-  const registerHandler= async (e)=>{
-    e.preventDefault();
-        
-    try {
-      const response = await fetch('https://bitsbids.azurewebsites.net/api/users/createUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Baby' : '123'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success('Registration successful!');
-        router.push('/');        
-        // You can redirect or do other actions here if needed
-      } else {
-        toast.error(`Registration failed: ${data.message || 'Unknown error'}`);
-      }
-    } catch (error) {
-      toast.error(`Error: ${error.message}`);
-      console.log(error);
-    }
-
-
-  }
-
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/existsByEmail?email=${formData.email}`, {
-          method: 'GET',
-          headers: {
-            'Baby': '123',
-          }
+        setFormData({
+            ...formData,
+            name: session.user.name,
+            email: session.user.email,
         });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const exists = await response.json(); // Wait for the promise to resolve
-        setUserExists(exists);
-        console.log(exists); // Log the resolved promise
+    }, [session, isLoading]);
 
-        if(exists){
-          router.push(`/profile/userProfile/${formData.email}`);
-        }
-  
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+    const isFormValid = formData.name && formData.email && formData.password && formData.phoneNumber && formData.address && /.+@hyderabad\.bits-pilani\.ac\.in$/.test(formData.email);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
-  
-    checkUser();
-  }, [formData.email]);
-  
+
+    const registerHandler = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('https://bitsbids.azurewebsites.net/api/users/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                toast.success('Registration successful!');
+                router.push('/');
+            } else {
+                toast.error(`Registration failed: ${data.message || 'Unknown error'}`);
+            }
+        } catch (error) {
+            toast.error(`Error: ${error.message}`);
+        }
+    };
+
+    // Function to check if user exists
+    const checkUserExists = async (email) => {
+        try {
+            const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/existsByEmail?email=${email}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const exists = await response.json();
+            setUserExists(exists);
+
+            if (exists) {
+                router.push(`/profile/userProfile/${email}`);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+ 
 
 
 

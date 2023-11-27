@@ -8,19 +8,18 @@ import Navbar from '@/components/shared/Navbar';
 export default function page({params}) {
 
     const router = useRouter();
-    const { data: session } = useSession();
-    const isLoad = status === "loading";
+    const { data: session , status } = useSession();
+    // const isLoad = stat === "loading";
     const [userBids, setAllUserBids] = useState([]);
 
     useEffect(() => {
-        if (isLoad) return;
+        if (status === "loading") return;
         if (!session) {
-          toast.error('You must be signed in to access the register page.');
-          router.push('/signin');
-          return;
+            toast.error('You must be signed in to access the register page.');
+            router.push('/signin');
+            return;
         }
-    }, [session, isLoad, router]);
-
+    }, [session, status, router]);
     useEffect(()=>{
         const getBidsOfUser = async ()=>{
             try {

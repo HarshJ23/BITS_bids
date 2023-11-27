@@ -29,7 +29,7 @@ export default function CreateListing() {
 
 
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session ,status } = useSession();
   const initialFormData = {
     name: "",
     details: "",
@@ -50,19 +50,15 @@ export default function CreateListing() {
   formData.deadline;
 
   useEffect(() => {
-    // if(isLoad) return;
+    if (status === "loading") return;
     if (session) {
        setUserEmail(session.user.email);
-        // console.log(formData.email);
-    }
-    if (isLoad) return;
-    if (!session) {
+    } else {
       toast.error('You must be signed in to access the register page.');
       router.push('/signin');
       return;
-      // router.replace('/signin');
-  }
-}, [session]);
+    }
+  }, [session, status]);
   
   // const useremailId = userEmail;
 

@@ -124,46 +124,65 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
 
   
     useEffect(() => {
-        if (!roomId) return;
-
+        if (!isChatOpen || !roomId) return;
+    
+        // Function to fetch chat history from the server
+        const fetchChatHistory = async () => {
+            try {
+                // Encoding the roomId to ensure special characters are handled correctly in the URL
+                const encodedRoomId = encodeURIComponent(roomId);
+                const response = await fetch(`https://bitsbids.azurewebsites.net/api/chat/getAllMessagesForRoomId?roomId=${encodedRoomId}` , {
+                    headers:{
+                        "Baby" : "123",
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const chatHistory = await response.json();
+    
+                // Assuming the API returns an array of messages in the correct order
+                setMessages(chatHistory.map(msg => ({
+                    message: msg.content,
+                    sender: msg.senderUserEmail
+                })));
+            } catch (error) {
+                console.error("Fetching chat history failed:", error);
+            }
+        };
+    
+        // Fetch chat history when the modal opens
+        fetchChatHistory();
+    
+        // WebSocket logic to handle new messages...
         const socket = new SockJS('https://bitsbids.azurewebsites.net/ws');
         const client = Stomp.over(socket);
-
+    
         client.connect({}, frame => {
             console.log('Connected: ' + frame);
             client.subscribe(`/topic/chat/${roomId}`, message => {
                 const receivedMessage = JSON.parse(message.body);
                 console.log('Received Message:', receivedMessage); // Debugging log
                 if(receivedMessage.content && receivedMessage.content.trim() !== '') {
-                    displayMessage(receivedMessage.content, receivedMessage.senderUserEmail); // Adjusted to use content and senderUserEmail
+                    displayMessage(receivedMessage.content, receivedMessage.senderUserEmail);
                 }
             });
         }, error => {
             console.error('Connection Error: ' + error);
         });
-
+    
         setStompClient(client);
+    
+        // Cleanup function to disconnect WebSocket when component unmounts
+        return () => {
+            if (client) {
+                client.disconnect();
+                console.log('Disconnected');
+            }
+        };
+    }, [isChatOpen, roomId]);
 
-        return () => client && client.disconnect();
-    }, [roomId]);
-
-    // const sendMessage = () => {
-    //     if (currentMessage.trim() !== "" && stompClient && roomId && session?.user?.email) {
-    //         const chatMessage = {
-    //             content: currentMessage,
-    //             senderUserEmail: session.user.email,
-    //             receiverUserEmail: session.user.email === sellerEmail ? buyerEmail : sellerEmail,
-    //             forProductId: productId,
-    //             roomId: roomId,
-    //             type: 'CHAT'
-    //         };
-    //         console.log('Sending Message:', chatMessage);
-    //         stompClient.send(`/app/chat/${roomId}/send`, {}, JSON.stringify(chatMessage));
-    //         displayMessage(currentMessage, session.user.email);
-    //         setCurrentMessage('');
-    //     }
-    // };
-
+    
     const sendMessage = () => {
         if (currentMessage.trim() !== "" && stompClient && roomId && session?.user?.email) {
             const chatMessage = {
@@ -180,10 +199,11 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
         }
     };
 
-
-    const displayMessage = (message, sender) => {
-        setMessages(prevMessages => [...prevMessages, { message, sender }]);
+    const displayMessage = (messageContent, senderEmail) => {
+        setMessages(prevMessages => [...prevMessages, { message: messageContent, sender: senderEmail }]);
     };
+
+
 
     const isMessageSentByCurrentUser = (senderEmail) => {
         return session?.user?.email && senderEmail === session.user.email;
@@ -206,18 +226,14 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
                 <div className="p-4 bg-gray-50">
                     <div className="overflow-y-auto h-60 mb-4 space-y-2">
                     {messages.map((msg, index) => (
-                            <div 
-                                key={index} 
-                                className={`p-3 rounded-lg ${
-                                    isMessageSentByCurrentUser(msg.sender) 
-                                        ? "bg-blue-500 text-white float-right clear-both" // Blue for sent messages
-                                        : "bg-green-500 text-white float-left clear-both" // Green for received messages
-                                }`}>
-                                <p className="text-sm">{msg.message}</p>
-                                {/* Clear float for next message */}
-                                <div className="clear-both"></div> 
-                            </div>
-                        ))}
+        <div key={index} className={`p-3 rounded-lg max-w-xs ${
+            isMessageSentByCurrentUser(msg.sender) 
+                ? "bg-blue-500 text-white float-right clear-both" // Blue for sent messages
+                : "bg-green-500 text-white float-left clear-both" // Green for received messages
+        }`}>
+            <p className="text-sm">{msg.message}</p>
+        </div>
+    ))}
                     </div>
                     <div className="flex border-t border-gray-200 pt-4">
                         <Input

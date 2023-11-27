@@ -50,7 +50,7 @@ export default function CreateListing() {
   formData.deadline;
 
   useEffect(() => {
-    if(isLoad) return;
+    // if(isLoad) return;
     if (session) {
        setUserEmail(session.user.email);
         // console.log(formData.email);

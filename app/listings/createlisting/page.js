@@ -52,7 +52,7 @@ export default function CreateListing() {
     }
     if (!session) {
       toast.error('You must be signed in to access the register page.');
-      redirect('/signin' , 'replace');
+      router.push('/signin');
       // router.replace('/signin');
   }
 }, [session]);

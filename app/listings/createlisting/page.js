@@ -36,11 +36,13 @@ export default function CreateListing() {
     price: "",
     deadline: "",
     photos: [] // To store image file references
+    
   };
   const [formData, setFormData] = useState(initialFormData); 
   const [userEmail , setUserEmail] =  useState(); 
   const [isLoading , setIsLoading ] = useState(false);
-  
+  const isLoad = stat === "loading";
+
   const isFormValid =
   formData.name &&
   formData.details &&
@@ -48,13 +50,16 @@ export default function CreateListing() {
   formData.deadline;
 
   useEffect(() => {
+    if(isLoad) return;
     if (session) {
        setUserEmail(session.user.email);
         // console.log(formData.email);
     }
+    if (isLoad) return;
     if (!session) {
       toast.error('You must be signed in to access the register page.');
       router.push('/signin');
+      return;
       // router.replace('/signin');
   }
 }, [session]);

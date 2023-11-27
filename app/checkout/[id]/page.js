@@ -269,6 +269,7 @@ useEffect(()=>{
                 </div>
 
         <Link href={`/profile/userProfile/${session?.user?.email}`}><Button className="mt-6">Back to Profile</Button></Link>
+        <Link href={`/bid/contact/${bidId}`}><Button className="mt-6 mx-4" variant="outline">Contact and Chat</Button></Link>
             </div>
             </>):
             

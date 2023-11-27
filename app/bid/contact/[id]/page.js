@@ -5,10 +5,12 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import ChatModal from "@/components/shared/ChatModal";
 import { AcceptBidDialog } from "@/components/shared/AcceptBidDialog";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function page({params}) {
     let bidId = params.id;
+    const { data: session } = useSession(); 
     const [individualBid , setIndividualBid] = useState({
         id: null,
         userCreatedEmailId: '',
@@ -109,7 +111,8 @@ useEffect(() => {
     getProductDetails();
 }, [individualBid.forWhichProductId]); 
 
-
+// condition to show chatButton and chatModal
+const shouldShowChat = session?.user?.email === individualBid.userCreatedEmailId || session?.user?.email === individualProduct.userCreatedEmailId;
 
 useEffect(()=>{
     const getUser = async ()=>{
@@ -170,7 +173,11 @@ return (
                     <p>Listed on : {individualProduct.createdOn}</p>
                     <p className="text-red-500">Bid deadline : {individualProduct.deadline}</p>
                 </div>
-                {!individualProduct.isSold ? (<AcceptBidDialog bidData={individualBid}/>):( <>
+                            
+                    {!individualProduct.isSold ?  (
+                session?.user?.email === individualProduct.userCreatedEmailId && session?.user?.email !== individualBid.userCreatedEmailId ? 
+                <AcceptBidDialog bidData={individualBid}/> : null
+            ):( <>
       <div className="justify-center items-center mt-12">
         <p className="text-xl font-semibold my-5"> This item has been sold</p>
         <p className="text-muted-foreground mt-3">Sold to : <span className="font-medium text-black ">{individualProduct.soldToUserName}</span></p>
@@ -189,12 +196,21 @@ return (
             </div>
         </section>
 
-<div className="flex flex-row gap-4 m-8">
-<Button onClick={toggleChatModal}>Chat with bidder</Button>
+        {shouldShowChat && (
+            <>
+                <div className="flex flex-row gap-4 m-8">
+                    <Button onClick={toggleChatModal}>Chat with bidder</Button>
+<Link href={`/listings/product/${individualProduct.id}`}>
+        <Button variant="outline" className="hover:bg-primary hover:text-white mx-8">Back to Product</Button>
+</Link>
+                </div>
+            </>
+        )}  
 
-<Link href={`/listings/product/${individualProduct.id}`}><Button variant="outline" className="hover:bg-primary hover:text-white">Back to Product</Button></Link>
-</div>
-<ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} />
+
+{isChatOpen && shouldShowChat && (
+    <ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} />
+)}
                 
     </div>
   )

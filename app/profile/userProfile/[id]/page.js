@@ -227,6 +227,7 @@ return (
  <ProfileDialog userData={userData}/>
     )}
 <Link href='/listings/createlisting'><Button>Create Listing</Button></Link>
+<Link href={`/bid/userbids/${userData.email}`}><Button>My All Bids</Button></Link>
 <Button 
   onClick={() => {
     signOut({ callbackUrl: '/' });

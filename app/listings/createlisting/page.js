@@ -26,125 +26,229 @@ import { LoadingSpinner } from "@/components/shared/LoadingSpinner";
 
 
 export default function CreateListing() {
-  const router = useRouter();
-  const { data: session } = useSession();
-  const initialFormData = {
-    name: "",
-    details: "",
-    price: "",
-    deadline: "",
-    photos: [] // To store image file references
-  };
-  const [formData, setFormData] = useState(initialFormData); 
-  const [userEmail , setUserEmail] =  useState(); 
-  const [isLoading , setIsLoading ] = useState(false);
-  
-  const isFormValid =
-  formData.name &&
-  formData.details &&
-  formData.price &&
-  formData.deadline;
 
-  useEffect(() => {
-    if (session) {
-       setUserEmail(session.user.email);
-        // console.log(formData.email);
-    }
-    if (!session) {
-      toast.error('You must be signed in to access the register page.');
-      router.push('/signin');
-      // router.replace('/signin');
-  }
-}, [session]);
+
+//   const router = useRouter();
+//   const { data: session } = useSession();
+//   const initialFormData = {
+//     name: "",
+//     details: "",
+//     price: "",
+//     deadline: "",
+//     photos: [] // To store image file references
+//   };
+//   const [formData, setFormData] = useState(initialFormData); 
+//   const [userEmail , setUserEmail] =  useState(); 
+//   const [isLoading , setIsLoading ] = useState(false);
   
-  // const useremailId = userEmail;
+//   const isFormValid =
+//   formData.name &&
+//   formData.details &&
+//   formData.price &&
+//   formData.deadline;
+
+//   useEffect(() => {
+//     if (session) {
+//        setUserEmail(session.user.email);
+//         // console.log(formData.email);
+//     }
+//     if (!session) {
+//       toast.error('You must be signed in to access the register page.');
+//       router.push('/signin');
+//       // router.replace('/signin');
+//   }
+// }, [session]);
+  
+//   // const useremailId = userEmail;
+
+//     const handleInputChange = (e) => {
+//     const { name, value, files } = e.target;
+//     if (name === "photos") {
+//       setFormData({
+//         ...formData,
+//         photos: files
+//       });
+//     } else {
+//       setFormData({
+//         ...formData,
+//         [name]: value,
+//       });
+//     }
+//   };
+  
+
+//     // Handle image upload to Firebase
+//     const handleImageUpload = async (images) => {
+//       setIsLoading(true);
+//       const uploadedImageUrls = [];
+//       for (const image of images) {
+//         try {
+//           const storageRef = ref(storage, `images/${image.name}`);
+//           const uploadTaskSnapshot = await uploadBytes(storageRef, image);
+//           const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
+//           uploadedImageUrls.push(downloadURL);
+//         } catch (error) {
+//           console.error("Error uploading image:", error);
+//         }
+//       }
+//        setIsLoading(false);
+//       return uploadedImageUrls;
+//     };
+
+//     // submit handler 
+//     const handleSubmit = async (e) => {
+//       e.preventDefault();
+//       setIsLoading(true);
+//       const imageUrls = await handleImageUpload(formData.photos);
+  
+//       const dataToSend = {
+//         userCreatedEmailId: userEmail, // Replace with actual email if available
+//         photosUrls: imageUrls.join(','), // Convert array of URLs to a comma-separated string
+//         name: formData.name,
+//         price: parseFloat(formData.price), // Ensure price is a number
+//         sellingPrice : 0,
+//         createdOn: new Date().toISOString(), // Set the current date in ISO format
+//         deadline: formData.deadline,
+//         quantity: 1, // Default quantity, modify as needed
+//         details: formData.details,
+//         isSold: 0, // Default value, update based on your logic
+//         soldDate: "", // Empty or set based on your logic
+//         soldToUserName: "", // Empty or set based on your logic
+//         soldToUserEmail:"",
+//         bidsOnThisProduct: [],
+//         finalBid : null, // Empty array or populate as needed
+//       };
+//       console.log('Sending data:', dataToSend);
+      
+//       try {
+//         const response = await fetch('https://bitsbids.azurewebsites.net/api/product/createProduct', {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Baby' : '123'
+//           },
+//           body: JSON.stringify(dataToSend),
+//         });
+//         if (response.ok) {
+//           toast.success('Voila! Item listed !')
+//           router.push(`/profile/userProfile/${userEmail}`);        
+//           // You can redirect or do other actions here if needed
+//         } 
+//         if (!response.ok) {
+//           toast.error('unexpected error,please try again');
+//           throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+  
+//         const responseData = await response.json();
+//         console.log('Response from backend:', responseData);
+  
+//       } catch (error) {
+//         console.error('Error submitting form:', error);
+//       }
+//       setIsLoading(false);
+//     };
+
+
+
+
+    const router = useRouter();
+    const { data: session } = useSession();
+    const [formData, setFormData] = useState({
+        name: "",
+        details: "",
+        price: "",
+        deadline: "",
+        photos: [] // To store image file references
+    });
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (!session) {
+            toast.error('You must be signed in to access this page.');
+            router.push('/signin'); // Corrected redirection
+        }
+    }, [session]);
+
+    const isFormValid = formData.name && formData.details && formData.price && formData.deadline;
 
     const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "photos") {
-      setFormData({
-        ...formData,
-        photos: files
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  };
-  
+        const { name, value, files } = e.target;
+        if (name === "photos") {
+            setFormData({ ...formData, photos: [...files] });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+    };
 
-    // Handle image upload to Firebase
     const handleImageUpload = async (images) => {
-      setIsLoading(true);
-      const uploadedImageUrls = [];
-      for (const image of images) {
+        setIsLoading(true);
         try {
-          const storageRef = ref(storage, `images/${image.name}`);
-          const uploadTaskSnapshot = await uploadBytes(storageRef, image);
-          const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
-          uploadedImageUrls.push(downloadURL);
+            const uploadedImageUrls = await Promise.all(images.map(async (image) => {
+                const storageRef = ref(storage, `images/${image.name}`);
+                const uploadTaskSnapshot = await uploadBytes(storageRef, image);
+                return await getDownloadURL(uploadTaskSnapshot.ref);
+            }));
+            return uploadedImageUrls;
         } catch (error) {
-          console.error("Error uploading image:", error);
+            console.error("Error uploading image:", error);
+            throw error; // Ensure the error is thrown to be caught by the caller
+        } finally {
+            setIsLoading(false);
         }
-      }
-       setIsLoading(false);
-      return uploadedImageUrls;
     };
 
-    // submit handler 
     const handleSubmit = async (e) => {
-      e.preventDefault();
-      setIsLoading(true);
-      const imageUrls = await handleImageUpload(formData.photos);
-  
-      const dataToSend = {
-        userCreatedEmailId: userEmail, // Replace with actual email if available
-        photosUrls: imageUrls.join(','), // Convert array of URLs to a comma-separated string
-        name: formData.name,
-        price: parseFloat(formData.price), // Ensure price is a number
-        sellingPrice : 0,
-        createdOn: new Date().toISOString(), // Set the current date in ISO format
-        deadline: formData.deadline,
-        quantity: 1, // Default quantity, modify as needed
-        details: formData.details,
-        isSold: 0, // Default value, update based on your logic
-        soldDate: "", // Empty or set based on your logic
-        soldToUserName: "", // Empty or set based on your logic
-        soldToUserEmail:"",
-        bidsOnThisProduct: [],
-        finalBid : null, // Empty array or populate as needed
-      };
-      console.log('Sending data:', dataToSend);
-      
-      try {
-        const response = await fetch('https://bitsbids.azurewebsites.net/api/product/createProduct', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Baby' : '123'
-          },
-          body: JSON.stringify(dataToSend),
-        });
-        if (response.ok) {
-          toast.success('Voila! Item listed !')
-          router.push(`/profile/userProfile/${userEmail}`);        
-          // You can redirect or do other actions here if needed
-        } 
-        if (!response.ok) {
-          toast.error('unexpected error,please try again');
-          throw new Error(`HTTP error! Status: ${response.status}`);
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            const imageUrls = await handleImageUpload(formData.photos);
+            const dataToSend = {
+                userCreatedEmailId: session.user.email,
+                photosUrls: imageUrls.join(','),
+                name: formData.name,
+                price: parseFloat(formData.price),
+                sellingPrice: 0,
+                createdOn: new Date().toISOString(),
+                deadline: formData.deadline,
+                quantity: 1,
+                details: formData.details,
+                isSold: 0,
+                soldDate: "",
+                soldToUserName: "",
+                soldToUserEmail: "",
+                bidsOnThisProduct: [],
+                finalBid: null,
+            };
+            console.log('Sending data:', dataToSend);
+
+            const response = await fetch('https://bitsbids.azurewebsites.net/api/product/createProduct', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Baby': '123'
+                },
+                body: JSON.stringify(dataToSend),
+            });
+
+            if (!response.ok) {
+                toast.error('unexpected error,please try again');
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Response from backend:', responseData);
+            toast.success('Voila! Item listed !');
+            router.push(`/profile/userProfile/${session.user.email}`);
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error(`Error: ${error.message}`);
+        } finally {
+            setIsLoading(false);
         }
-  
-        const responseData = await response.json();
-        console.log('Response from backend:', responseData);
-  
-      } catch (error) {
-        console.error('Error submitting form:', error);
-      }
-      setIsLoading(false);
     };
+
+
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 shadow-2xl mx-4">

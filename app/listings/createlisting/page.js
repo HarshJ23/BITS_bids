@@ -41,7 +41,7 @@ export default function CreateListing() {
   const [formData, setFormData] = useState(initialFormData); 
   const [userEmail , setUserEmail] =  useState(); 
   const [isLoading , setIsLoading ] = useState(false);
-  const isLoad = status === "loading";
+  // const isLoad = status === "loading";
 
   const isFormValid =
   formData.name &&

@@ -79,6 +79,7 @@ export default function Register() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Baby' : '123'
                 },
                 body: JSON.stringify(formData)
             });
@@ -103,6 +104,7 @@ export default function Register() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Baby' : '123'
                 }
             });
             if (!response.ok) {

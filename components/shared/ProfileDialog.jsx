@@ -78,6 +78,31 @@ const EditProfileRoute = ()=>{
               disabled
             />
           </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="earned" className="text-right">
+              Earning
+            </Label>
+            <Input
+              id="earned"
+              defaultValue={userData.totalEarnings}
+              className="col-span-3"
+              disabled
+            />
+          </div>
+
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="phone" className="text-right">
+              Expense
+            </Label>
+            <Input
+              id="phone"
+              defaultValue={userData.moneySpent}
+              className="col-span-3"
+              disabled
+            />
+          </div>
         </div>
         <DialogFooter>
            

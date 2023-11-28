@@ -79,7 +79,7 @@ export default function BidForm({ productId }) {
             ) : (
                 <>
                     <CardContent>
-                        <CardTitle className="">Please Sign in to check the item</CardTitle>
+                        <CardTitle className="">Please Sign in to continue with the item</CardTitle>
                     </CardContent> 
                 </>
             )}

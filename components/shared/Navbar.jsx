@@ -1,10 +1,9 @@
 'use client';
 import Link from "next/link";
 import { useEffect , useState } from "react";
-import { Button } from "../ui/button";
+// import { Button } from "../ui/button";
 import { useSession } from 'next-auth/react'
-
-
+import Fuse from "fuse.js";
 
 const Navbar = () => {
 
@@ -43,6 +42,27 @@ const [allProducts, setAllProducts] = useState([]);
         getListings();
     }, []);
 
+    //fuse parameters options
+    const fuseOptions = {
+      includeScore: true,
+      includeMatches: true,
+      threshold: 0.6,
+      distance: 100,
+      useExtendedSearch: true,
+      minMatchCharLength: 3,
+      keys: [
+        { name: 'name', weight: 0.7 },
+        { name: 'details', weight: 0.7 }
+      ],
+      shouldSort: true,
+      tokenize: true,
+      isCaseSensitive : false
+    };
+
+    //initialise Fuse.js
+    const fuse = new Fuse(allProducts, fuseOptions);
+
+
     // Handle search input change
     const handleSearchChange = (event) => {
         const newSearchTerm = event.target.value;
@@ -51,17 +71,26 @@ const [allProducts, setAllProducts] = useState([]);
     };
 
     // Perform search
-    const handleSearch = (searchTerm) => {
-      if (searchTerm.trim() === '') {
-          setFilteredItems([]);
-      } else {
-          const filteredProducts = allProducts.filter((product) =>
-              product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              (product.details && product.details.toLowerCase().includes(searchTerm.toLowerCase()))
-          );
-          setFilteredItems(filteredProducts);
-      }
-  };
+  //   const handleSearch = (searchTerm) => {
+  //     if (searchTerm.trim() === '') {
+  //         setFilteredItems([]);
+  //     } else {
+  //         const filteredProducts = allProducts.filter((product) =>
+  //             product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //             (product.details && product.details.toLowerCase().includes(searchTerm.toLowerCase()))
+  //         );
+  //         setFilteredItems(filteredProducts);
+  //     }
+  // };
+
+  const handleSearch = (searchTerm) => {
+    if (searchTerm.trim() === '') {
+        setFilteredItems([]);
+    } else {
+        const results = fuse.search(searchTerm).map(({ item }) => item);
+        setFilteredItems(results);
+    }
+};
 
   
   // Handle item click
@@ -106,7 +135,7 @@ const [allProducts, setAllProducts] = useState([]);
  {/* Buttons */}
  <div className="flex items-center space-x-4">
         {/* Sell Items Button */}
-        <Link href={'/signin'} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
+        <Link href={'/listings/createlisting'} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
             <p className="font-semibold ">Sell Items</p>
           
         </Link>

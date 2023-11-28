@@ -56,21 +56,23 @@ export default function BidForm({ productId }) {
                     </CardContent>
                     <CardContent className="flex justify-center items-center w-full">
                         <form className="flex justify-center items-center space-x-4" onSubmit={onSubmit}>
-                            <Input 
-                                type="number" 
-                                placeholder="Place your Bid" 
-                                className="flex-1" 
-                                value={bidAmount}
-                                onChange={(e) => setBidAmount(e.target.value)}
-                                disabled={isBidPlaced} // Disable input if bid is placed
-                            />
+                        <Input 
+                            type="number" 
+                            placeholder="Place your Bid" 
+                            className="flex-1" 
+                            value={bidAmount}
+                            onChange={(e) => setBidAmount(e.target.value)}
+                            disabled={isBidPlaced}
+                            min="0"
+                            onInput={(e) => e.target.value = e.target.value.replace(/^-/, '')}
+                        />
                             <Button 
                                 type="submit" 
                                 className="px-4 py-2" 
-                                disabled={isBidPlaced} // Disable button if bid is placed
-                            >
+                                disabled={isBidPlaced}>
                                 Submit bid
                             </Button>
+                            
                         </form>
                     </CardContent>
                 </>

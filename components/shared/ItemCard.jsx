@@ -28,8 +28,8 @@ export function ItemCard({ itemName, date, price, img }) {
               {itemName}
             </p>
             <p className="text-base font-medium">Price: <span className="font-bold">{price}</span></p>
-          </div>
           <p className="font-medium text-sm">{new Date(date).toLocaleDateString()}</p>
+          </div>
         </div>
       </div>
     </CardContent>

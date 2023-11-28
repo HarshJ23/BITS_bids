@@ -6,76 +6,70 @@ import { useSession } from 'next-auth/react'
 
 
 
-const Navbar = ({ onSearch }) => {
-    const [allProducts, setAllProducts] = useState([]);
+const Navbar = () => {
+
+const [allProducts, setAllProducts] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const { data: session } = useSession();
 
+    // Function to toggle mobile menu
+    const toggleMobileMenu = () => {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) {
+            mobileMenu.classList.toggle('hidden');
+        }
+    };
 
-
-  // Function to toggle mobile menu
-  const toggleMobileMenu = () => {
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenu) {
-      mobileMenu.classList.toggle('hidden');
-    }
-  };
-
-
-
-  const handleSearchChange = (event) => {
-    const searchTerm = event.target.value;
-    if (onSearch) {
-      onSearch(searchTerm);
-    }
-    handleSearch(searchTerm); // Call handleSearch with the updated search term
-  };
-
-
-  useEffect(()=>{
-    const getListings = async ()=>{
-        try {
-            const response = await fetch(`https://bitsbids.azurewebsites.net/api/product/getAllUnsoldProducts` , {
-                method : 'GET',
-                headers:{
-                    'Baby' : '123',
+    // Fetch all products
+    useEffect(() => {
+        const getListings = async () => {
+            try {
+                const response = await fetch(`https://bitsbids.azurewebsites.net/api/product/getAllUnsoldProducts`, {
+                    method: 'GET',
+                    headers: {
+                        'Baby': '123',
+                    }
+                })
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            })
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
-              const getUserData = await response.json();
-              setAllProducts(getUserData);
-              console.log(getUserData);
-        } catch (error) {
-            console.error('Error fetching data:', error)
+                const products = await response.json();
+                setAllProducts(products);
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+        getListings();
+    }, []);
+
+    // Handle search input change
+    const handleSearchChange = (event) => {
+        const newSearchTerm = event.target.value;
+        setSearchTerm(newSearchTerm);
+        handleSearch(newSearchTerm);
+    };
+
+    // Perform search
+    const handleSearch = (searchTerm) => {
+      if (searchTerm.trim() === '') {
+          setFilteredItems([]);
+      } else {
+          const filteredProducts = allProducts.filter((product) =>
+              product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              (product.details && product.details.toLowerCase().includes(searchTerm.toLowerCase()))
+          );
+          setFilteredItems(filteredProducts);
       }
-    }
-getListings();
-},[]);
-    
-const handleSearch = (searchTerm) => {
-    if (searchTerm.trim() === '') {
-      // Clear the filtered items if the search term is empty
-      setFilteredItems([]);
-    } else {
-      // Filter products that include the search term
-      const filteredProducts = allProducts.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredItems(filteredProducts);
-    }
   };
 
-
-  const handleItemClick = (item) => {
-    // Set the search bar value to the clicked item
-    document.querySelector('input[name="search"]').value = item.name;
-    // Clear the filtered items
-    setFilteredItems([]);
-    // Perform the search with the selected item
-    onSearch(item.name);
-  };
+  
+  // Handle item click
+    const handleItemClick = (item) => {
+        document.querySelector('input[name="search"]').value = item.name;
+        setFilteredItems([]);
+        setSearchTerm(item.name);
+    };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-1000">
@@ -95,8 +89,7 @@ const handleSearch = (searchTerm) => {
     <u className="absolute z-10 top-full list-none mt-1 no-underline bg-white w-full border border-gray-300 rounded-lg shadow-lg overflow-hidden">
       {filteredItems.map((item) => (
        
-       // <Link  key={item.id} onClick={() => handleItemClick(item)} className="p-2 hover:bg-gray-100 cursor-pointer">
-       //     <p>{item.name}</p></Link>
+ 
       
        <li  className="p-2 hover:bg-gray-100 cursor-pointer no-underline"  href={`/listings/product/${item.id}`} >
            <Link key={item.id}
@@ -132,8 +125,6 @@ const handleSearch = (searchTerm) => {
       </div>
 
 
-          {/* Primary Navbar items */}
-          {/* ... existing code ... */}
         </div>
 
        {/* Searchbar - visible on small screens */}
@@ -158,9 +149,6 @@ const handleSearch = (searchTerm) => {
   )}
 </div>
 
-
-        {/* Mobile menu */}
-        {/* ... existing code ... */}
       </div>
     </nav>
   );

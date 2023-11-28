@@ -35,9 +35,9 @@ export default function Home() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
-              const getUserData = await response.json();
-              setAllProducts(getUserData);
-              console.log(getUserData);
+              const UnsoldProducts = await response.json();
+              setAllProducts( UnsoldProducts);
+              console.log( UnsoldProducts);
         } catch (error) {
             console.error('Error fetching data:', error)
       }
@@ -48,19 +48,11 @@ getListings();
 },[]);
 
 
-const handleSearch = (searchTerm) => {
-  searchTerm = searchTerm.toLowerCase();
-  const filteredProducts = allProducts.filter(product =>
-    product.name.toLowerCase().includes(searchTerm)
-  );
 
-  // Display these products as per your UI design
-  console.log(filteredProducts); // Replace this with your UI rendering logic
-};
 
 return (
     <>
- <Navbar onSearch={handleSearch}/>
+ <Navbar/>
  <main className="flex justify-center px-4">
 
  {isLoading ? (

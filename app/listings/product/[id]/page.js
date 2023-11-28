@@ -107,6 +107,7 @@ export default function page({params}) {
     
 
     // for getting bids and sorting highest bid 
+    //gpt code
     useEffect(() => {
       const fetchBids = async () => {
           try {
@@ -127,39 +128,8 @@ export default function page({params}) {
               console.error('Error while fetching bids', error);
           }
       };
-
-      fetchBids();
+  fetchBids();
   }, [params.id]);
-
-      // const handleBidSubmit = async (e)=>{
-      //   e.preventDefault();
-            
-      //   try {
-      //     const response = await fetch('https://bitsbids.azurewebsites.net/api/bid/createBid', {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //         'Baby' : '123'
-      //       },
-      //       body: JSON.stringify(formData)
-      //     });
-    
-      //     const data = await response.json();
-    
-      //     if (response.ok) {
-      //       toast.success('Registration successful!');
-      //       router.push('/');        
-      //       // You can redirect or do other actions here if needed
-      //     } else {
-      //       toast.error(`Registration failed: ${data.message || 'Unknown error'}`);
-      //     }
-      //   } catch (error) {
-      //     toast.error(`Error: ${error.message}`);
-      //     console.log(error);
-      //   }
-    
-    
-      // }
 
   return (
     <div>

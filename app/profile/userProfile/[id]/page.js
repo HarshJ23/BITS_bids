@@ -142,6 +142,18 @@ useEffect(()=>{
   getUserPurchases ();
 },[email]);
 
+
+// const handleSearch = (searchTerm) => {
+//   searchTerm = searchTerm.toLowerCase();
+//   const filteredProducts = allProducts.filter(product =>
+//     product.name.toLowerCase().includes(searchTerm)
+//   );
+
+//   // Display these products as per your UI design
+//   console.log(filteredProducts); // Replace this with your UI rendering logic
+// };
+
+
 return (
 <>
 <Navbar/>

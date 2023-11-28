@@ -54,6 +54,7 @@ export default function page({params}) {
       });
       const { data: session } = useSession();
 
+      const [highestBid, setHighestBid] = useState(0);
 
     useEffect(()=>{
       const getListingbyId = async ()=>{
@@ -104,6 +105,31 @@ export default function page({params}) {
     getUser();
     },[individualListing.userCreatedEmailId]);
     
+
+    // for getting bids and sorting highest bid 
+    useEffect(() => {
+      const fetchBids = async () => {
+          try {
+              const response = await fetch(`https://bitsbids.azurewebsites.net/api/bid/getBidsOnProduct?productId=${params.id}` ,{
+                headers:{
+                  "Baby" : "123",
+                }
+              });
+              if (!response.ok) {
+                  throw new Error('Failed to fetch bids');
+              }
+              const bidsData = await response.json();
+              if (bidsData && bidsData.length > 0) {
+                  const maxBid = Math.max(...bidsData.map(bid => bid.priceOfBid));
+                  setHighestBid(maxBid);
+              }
+          } catch (error) {
+              console.error('Error while fetching bids', error);
+          }
+      };
+
+      fetchBids();
+  }, [params.id]);
 
       // const handleBidSubmit = async (e)=>{
       //   e.preventDefault();
@@ -163,8 +189,8 @@ export default function page({params}) {
                     </div>
 
                     <div className="flex flex-col">
-                      {!individualListing.isSold ? (<> <p className="text-xl mt-3">Bid Placed:</p>
-                        <h1 className='font-bold text-4xl tracking-tight'>200</h1></>):(<> <p className="text-xl mt-3">Sold for:</p>
+                      {!individualListing.isSold ? (<> <p className="text-xl mt-3">Highest Bid Placed:</p>
+                        <h1 className='font-bold text-4xl tracking-tight'>{highestBid}</h1></>):(<> <p className="text-xl mt-3">Sold for:</p>
                         <h1 className='font-bold text-4xl tracking-tight'>{individualListing.sellingPrice}</h1></>)}
                        
                     </div>

@@ -185,7 +185,7 @@ export default function page({params}) {
         individualListing.userCreatedEmailId === session?.user?.email ? (
             <BidTable bids={individualListing.bidsOnThisProduct}/>
         ) : (
-            <BidForm productId={params.id}/>
+            <BidForm productId={params.id} askingPrice={individualListing.price}/>
         )
     ) : (
       <>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
 
-export default function BidForm({ productId }) {
+export default function BidForm({ productId , askingPrice }) {
     const { data: session } = useSession();
     const [bidAmount, setBidAmount] = useState('');
     const [isBidPlaced, setIsBidPlaced] = useState(false); // New state to track bid status
@@ -47,6 +47,13 @@ export default function BidForm({ productId }) {
         }
     };
 
+
+    useEffect(() => {
+        if (askingPrice) {
+          setBidAmount(askingPrice);
+        }
+      }, [askingPrice]);
+
     return (
         <Card className="w-[500px] h-full mx-auto mt-16 flex justify-center items-center bg-secondary">
             {session ? (
@@ -61,10 +68,19 @@ export default function BidForm({ productId }) {
                             placeholder="Place your Bid" 
                             className="flex-1 transition ease-linear" 
                             value={bidAmount}
-                            onChange={(e) => setBidAmount(e.target.value)}
-                            disabled={isBidPlaced}
-                            min="0"
-                            onInput={(e) => e.target.value = e.target.value.replace(/^-/, '')}
+                            onChange={(e) => {
+                              // Allow any value to be entered, but remove negative signs
+                              e.target.value = e.target.value.replace(/^-/, '');
+                              setBidAmount(e.target.value);
+                            }}
+                            onBlur={() => {
+                              // If the user leaves the input with a value below the askingPrice, update it to the askingPrice
+                              if (parseFloat(bidAmount) < askingPrice) {
+                                setBidAmount(askingPrice);
+                              }
+                             }}
+                             disabled={isBidPlaced}
+                             min={askingPrice}
                         />
                             <Button 
                                 type="submit" 

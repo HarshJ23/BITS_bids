@@ -164,24 +164,28 @@ return (
         <h1 className='font-extrabold text-4xl tracking-tight '>Welcome {firstName} !</h1>
         </div>
 
-        <div>
+        {/* <div>
         <Input type="email" placeholder="Email" value={userData.email} className='w-72 shadow-xl border-gray-400 ' disabled />
-        </div>
+        </div> */}
+        {userData.email && (
+ <ProfileDialog userData={userData}/>
+    )}
         
         </div>
      
         {userListings && userListings.length > 0 ? (
     <>
+<div className='mb-10 pb-10'>
 
     {/* unsold items table */}
         <div className='mt-8 mx-4'>
           {unsoldItemsofUser && unsoldItemsofUser.length>0 ? (<div>
                 <h1 className='font-extrabold text-4xl tracking-tight '>Current items</h1>
                 {isLoading ? (
-                    <TabularSkeletonLoader />
-                ) : (
+                  <TabularSkeletonLoader />
+                  ) : (
                     <DataTable data={unsoldItemsofUser} buyerSellerName="Buyer" />
-                )}
+                    )}
             </div>):
           (  <div className= 'flex justify-center items-center  h-[30vh]'>
             <h1 className='font-extrabold text-2xl tracking-tight '>sell new items</h1>
@@ -195,10 +199,10 @@ return (
           {soldItemsofUser && soldItemsofUser.length>0 ? (<div>
                 <h1 className='font-extrabold text-4xl tracking-tight '>Items Sold by You</h1>
                 {isLoading ? (
-                    <TabularSkeletonLoader />
-                ) : (
+                  <TabularSkeletonLoader />
+                  ) : (
                     <DataTable data={soldItemsofUser} buyerSellerName="Buyer" />
-                )}
+                    )}
             </div>):
           (  <div className= 'flex justify-center items-center  h-[30vh]'>
             <h1 className='font-extrabold text-2xl tracking-tight '>None of your items sold yet.</h1>
@@ -212,10 +216,10 @@ return (
           {userPurchases  && userPurchases.length>0 ? (<div>
                 <h1 className='font-extrabold text-4xl tracking-tight'>Items Purchased by You</h1>
                 {isLoading ? (
-                    <TabularSkeletonLoader />
-                ) : (
+                  <TabularSkeletonLoader />
+                  ) : (
                     <DataTable data={userPurchases} buyerSellerName="Seller" />
-                )}
+                    )}
             </div>):
           (  <div className= 'flex justify-center items-center  h-[30vh]'>
             <h1 className='font-extrabold text-2xl tracking-tight '>No purchases yet.</h1>
@@ -223,6 +227,7 @@ return (
             
             )}
         </div>
+            </div>
 
     </>
 ) : (
@@ -232,12 +237,8 @@ return (
 )}
 
         
-<div className='flex flex-row mx-4 gap-4 my-4'>
-{/* <Link href='/'><Button>Home</Button></Link> */}
-{/* <Link href='/register'><Button>Register</Button></Link> */}
-{userData.email && (
- <ProfileDialog userData={userData}/>
-    )}
+{/* <div className='flex flex-row mx-4 gap-4 my-4'>
+
 <Link href='/listings/createlisting'><Button>Create Listing</Button></Link>
 <Link href={`/bid/userbids/${userData.email}`}><Button>My All Bids</Button></Link>
 <Button 
@@ -250,8 +251,29 @@ return (
 </Button>
 
 
-</div>
+</div> */}
 
+<div className="fixed inset-x-0 bottom-0 bg-white z-50 p-3 mb-3 flex justify-center gap-4 items-center shadow-lg rounded-xl mx-4 transition hover:cursor-pointer hover:scale-105 hover:shadow-2xl ease-in-out">
+        <Link href='/listings/createlisting'>
+          <Button >
+            Create Listing
+          </Button>
+        </Link>
+        <Link href={`/bid/userbids/${userData.email}`}>
+          <Button className="">
+            My All Bids
+          </Button>
+        </Link>
+        <Button 
+          onClick={() => {
+            signOut({ callbackUrl: '/' });
+            toast.success("Signed out");
+          }} 
+         variant="destructive"
+        >
+          Logout
+        </Button>
+      </div>
 </>
   )
 }

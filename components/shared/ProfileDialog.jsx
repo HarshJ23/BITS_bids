@@ -24,7 +24,7 @@ const EditProfileRoute = ()=>{
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Profile Settings</Button>
+        <Button variant="outline" className="shadow-md text-sm">My Profile details</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

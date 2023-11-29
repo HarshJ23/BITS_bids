@@ -59,7 +59,7 @@ export default function BidForm({ productId }) {
                         <Input 
                             type="number" 
                             placeholder="Place your Bid" 
-                            className="flex-1" 
+                            className="flex-1 transition ease-linear" 
                             value={bidAmount}
                             onChange={(e) => setBidAmount(e.target.value)}
                             disabled={isBidPlaced}

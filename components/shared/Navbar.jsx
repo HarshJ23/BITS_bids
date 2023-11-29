@@ -4,9 +4,14 @@ import { useEffect , useState } from "react";
 // import { Button } from "../ui/button";
 import { useSession } from 'next-auth/react'
 import Fuse from "fuse.js";
+import { Input } from "../ui/input";
+import { Search } from "lucide-react";
+
+
+
+
 
 const Navbar = () => {
-
 const [allProducts, setAllProducts] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -106,13 +111,24 @@ const [allProducts, setAllProducts] = useState([]);
         <div className="flex justify-between items-center">
           {/* Website Logo */}
           <Link href="/" className="flex items-center py-4 px-2">
-            <span className="font-semibold text-primary text-2xl hover:bg-slate-100 rounded-md p-2">BITS_bids</span>
+            <span className="font-bold text-primary text-2xl hover:bg-slate-100 rounded-md p-2">BITS_bids</span>
           </Link>
+
+        
+
 {/* Searchbar */}
 <div className="flex-grow md:flex md:items-center md:justify-center hidden relative">
-  <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-    type="search" name="search" placeholder="Search"
+
+
+{/* <div className="flex items-center  bg-white h-10 px-5 rounded-lg text-sm"> */}
+<Search size={20} color="#2563eb" className="mx-4"/>
+  <Input className="h-10 px-5 pr-16 text-sm w-1/2 transition ease-linear sm:transition sm:ease-linear shadow-md"
+    type="search" name="search" placeholder="Search for items or details"
     onChange={handleSearchChange} />
+
+
+{/* </div> */}
+
 
   {filteredItems.length > 0 && (
     <u className="absolute z-10 top-full list-none mt-1 no-underline bg-white w-full border border-gray-300 rounded-lg shadow-lg overflow-hidden">
@@ -135,9 +151,13 @@ const [allProducts, setAllProducts] = useState([]);
  {/* Buttons */}
  <div className="flex items-center space-x-4">
         {/* Sell Items Button */}
+        <Link href={'/'} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
+           <p className="font-semibold hover:text-primary">Home</p>
+          </Link>
+
+
         <Link href={'/listings/createlisting'} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
             <p className="font-semibold ">Sell Items</p>
-          
         </Link>
 
 
@@ -157,9 +177,12 @@ const [allProducts, setAllProducts] = useState([]);
         </div>
 
        {/* Searchbar - visible on small screens */}
-<div className="mt-2 mb-2 flex justify-center md:hidden relative">
-  <input className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-    type="search" name="search" placeholder="Search"
+<div className="mt-2 flex justify-center md:hidden relative">
+{/* <Search color="#2563eb" className="mx-4"/> */}
+  <Input
+    // type="search" 
+    name="search" placeholder="Search"
+    className="transition ease-linear h-10 px-5 pr-16 text-sm w-2/3 mb-4"
     onChange={handleSearchChange} />
 
   {filteredItems.length > 0 && (

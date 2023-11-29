@@ -198,10 +198,10 @@ return (
 
         {shouldShowChat && (
             <>
-                <div className="flex flex-row gap-4 m-8">
-                    <Button onClick={toggleChatModal}>Chat with bidder</Button>
+                <div className="flex flex-row gap-4 mx-8">
+                    <Button onClick={toggleChatModal}>Chat </Button>
 <Link href={`/listings/product/${individualProduct.id}`}>
-        <Button variant="outline" className="hover:bg-primary hover:text-white mx-8">Back to Product</Button>
+        <Button variant="outline" className="hover:bg-primary hover:text-white mx-3">Back to Product</Button>
 </Link>
                 </div>
             </>
@@ -209,7 +209,7 @@ return (
 
 
 {isChatOpen && shouldShowChat && (
-    <ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} sellerEmail={individualProduct.userCreatedEmailId} buyerEmail={individualBid.userCreatedEmailId} productId={individualProduct.id}/>
+    <ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} sellerEmail={individualProduct.userCreatedEmailId} buyerEmail={individualBid.userCreatedEmailId} productId={individualProduct.id} isSold={individualProduct.isSold}/>
 )}
                 
     </div>

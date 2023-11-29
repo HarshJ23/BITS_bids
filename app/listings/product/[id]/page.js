@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import BidTable from "@/components/shared/BidTable";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import ChatModal from "@/components/shared/ChatModal";
 
 
 
@@ -52,7 +53,7 @@ export default function page({params}) {
         moneySpent: 0,
         password: ''
       });
-      const { data: session } = useSession();
+      const { data: session, status } = useSession();
 
       const [highestBid, setHighestBid] = useState(0);
 
@@ -131,6 +132,14 @@ export default function page({params}) {
   fetchBids();
   }, [params.id]);
 
+
+  //chatModal handling 
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const toggleChatModal = () => setIsChatOpen(!isChatOpen);
+  
+  //shouldShowChat logic different for /bid/contact and /product/[id] page.
+  const shouldShowChat = session?.user ? true : false;
+
   return (
     <div>
       {/* <p>This product has id : {params.id}</p> */}
@@ -205,7 +214,20 @@ export default function page({params}) {
                 
             </div>
             </div>
-        </section>
+
+            {shouldShowChat && (
+            <>
+                <div className="flex flex-row gap-4 m-8">
+                    <Button onClick={toggleChatModal}>Chat </Button>
+                </div>
+            </>
+        )}  
+    </section>
+
+{isChatOpen && shouldShowChat && (
+    <ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} sellerEmail={individualListing.userCreatedEmailId} buyerEmail={session?.user?.email} productId={params.id} isSold={individualListing.isSold}/>
+)}    
+        
 
     </div>
   )

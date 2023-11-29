@@ -5,7 +5,7 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { useSession } from 'next-auth/react';
 
-const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, productId }) => {
+const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, productId , isSold }) => {
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
     const [currentMessage, setCurrentMessage] = useState("");
@@ -106,6 +106,12 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-2">
                 <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-4 rounded-t-2xl flex justify-between items-center">
                     <p className="text-white text-xl font-semibold">Chat </p>
+     {isSold &&  (<div className='mx-3'>
+    <p className='text-xs my-1  text-white'>Buyer: <span>{buyerEmail}</span></p>
+    <p className='text-xs my-1  text-white'>Seller: <span>{sellerEmail}</span></p>
+</div>)}               
+
+
                     <Button 
                         onClick={toggleChatModal}
                         className="text-white hover:text-blue-300 transition duration-200 text-2xl"

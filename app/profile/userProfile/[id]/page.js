@@ -161,7 +161,7 @@ return (
 
         <div>
         <p className='text-xl font-semibold'>My profile</p>
-        <h1 className='font-extrabold text-4xl tracking-tight '>Welcome {firstName} !</h1>
+        <h1 className='font-extrabold text-2xl lg:text-4xl tracking-tight '>Welcome {firstName} !</h1>
         </div>
 
         {/* <div>
@@ -180,7 +180,7 @@ return (
     {/* unsold items table */}
         <div className='mt-8 mx-4'>
           {unsoldItemsofUser && unsoldItemsofUser.length>0 ? (<div>
-                <h1 className='font-extrabold text-4xl tracking-tight '>Current items</h1>
+                <h1 className='font-extrabold text-2xl lg:text-4xl tracking-tight '>Current items</h1>
                 {isLoading ? (
                   <TabularSkeletonLoader />
                   ) : (
@@ -197,7 +197,7 @@ return (
  {/* Sold items table */}
         <div className='mt-8 mx-4'>
           {soldItemsofUser && soldItemsofUser.length>0 ? (<div>
-                <h1 className='font-extrabold text-4xl tracking-tight '>Items Sold by You</h1>
+                <h1 className='font-extrabold text-2xl lg:text-4xl tracking-tight '>Items Sold by You</h1>
                 {isLoading ? (
                   <TabularSkeletonLoader />
                   ) : (
@@ -214,7 +214,7 @@ return (
  {/* items purchases table */}
  <div className='mt-8 mx-4'>
           {userPurchases  && userPurchases.length>0 ? (<div>
-                <h1 className='font-extrabold text-4xl tracking-tight'>Items Purchased by You</h1>
+                <h1 className='font-extrabold text-2xl lg:text-4xl tracking-tight'>Items Purchased by You</h1>
                 {isLoading ? (
                   <TabularSkeletonLoader />
                   ) : (
@@ -253,7 +253,7 @@ return (
 
 </div> */}
 
-<div className="fixed inset-x-0 bottom-0 bg-white z-50 p-3 mb-3 flex justify-center gap-4 items-center shadow-lg rounded-xl mx-4 transition hover:cursor-pointer hover:scale-105 hover:shadow-2xl ease-in-out">
+<div className="fixed inset-x-0 bottom-0 bg-white z-50 p-3 mb-3 flex justify-center gap-4 items-center shadow-2xl shadow-gray-400 rounded-lg mx-4 transition hover:cursor-pointer hover:scale-95 ease-in-out">
         <Link href='/listings/createlisting'>
           <Button >
             Create Listing

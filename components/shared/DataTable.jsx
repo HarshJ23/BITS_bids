@@ -11,7 +11,7 @@ const DataTable = ({ data, buyerSellerName }) => {
   };
 
   return (
-    <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-3 mb-6  z-0">
+    <div className="overflow-x-auto  shadow-md sm:rounded-lg mt-3 mb-6 z-60">
     <table className="w-full text-sm text-left text-gray-500">
       <thead className="text-sm text-gray-700 uppercase bg-gray-100">
         <tr>

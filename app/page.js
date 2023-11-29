@@ -55,25 +55,24 @@ return (
  <Navbar/>
  <main className="flex justify-center px-4">
 
- {isLoading ? (
-                    <CardLoader />
-                ) : (
-                  <section className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-8 md:gap-6 sm:gap-4 w-full max-w-7xl ">
+  {isLoading ? (
+    <CardLoader />
+  ) : (
+    <section className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-8 md:gap-6 sm:gap-4 w-full max-w-7xl mx-auto">
+      {allProducts.length > 0 && (
+        allProducts.map((item) => (
+          <Link key={item.id} href={`/listings/product/${item.id}`}>
+            <ItemCard itemName={item.name} date={item.deadline} price={item.price} img={item.photosUrls} />
+          </Link>
+        ))
+      )}
+    </section>
+  )}
 
-                  {allProducts.length>0 && (
-                  
-                    allProducts.map((item)=>(
-                  <Link key={item.id} href={`/listings/product/${item.id}`}><ItemCard itemName={item.name} date={item.deadline} price={item.price} img={item.photosUrls}/></Link>
-                    )))}
-                          {/* <ItemCard/>
-                          <ItemCard/>
-                          <ItemCard/>
-                          <ItemCard/> */}
-                        </section>
-                )}
+</main>
 
 
-        </main>
+
     </>
   );
 }

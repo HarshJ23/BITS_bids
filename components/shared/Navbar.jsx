@@ -111,7 +111,7 @@ const [allProducts, setAllProducts] = useState([]);
         <div className="flex justify-between items-center">
           {/* Website Logo */}
           <Link href="/" className="flex items-center py-4 px-2">
-            <span className="font-bold text-primary text-2xl hover:bg-slate-100 rounded-md p-2">BITS_bids</span>
+            <span className="font-bold text-primary  hover:bg-slate-100 rounded-md p-2 text-lg md:text-xl lg:text-2xl">BITS_bids</span>
           </Link>
 
         
@@ -152,23 +152,23 @@ const [allProducts, setAllProducts] = useState([]);
  <div className="flex items-center space-x-4">
         {/* Sell Items Button */}
         <Link href={'/'} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
-           <p className="font-semibold hover:text-primary">Home</p>
+           <p className="font-semibold hover:text-primary text-xs md:text-sm lg:text-base" >Home</p>
           </Link>
 
 
         <Link href={'/listings/createlisting'} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
-            <p className="font-semibold ">Sell Items</p>
+            <p className="font-semibold text-xs md:text-sm lg:text-base ">Sell Items</p>
         </Link>
 
 
         {session ? 
         (
           <Link href={`/profile/userProfile/${session.user.email}`} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
-             <p className="font-semibold hover:text-primary ">Profile</p>
+             <p className="font-semibold hover:text-primary text-xs md:text-sm lg:text-base ">Profile</p>
           </Link>
         ) : (
           <Link href={'/signin'} className=" hover:bg-slate-100 rounded-md p-2 hover:text-primary">
-           <p className="font-semibold hover:text-primary">Sign In</p>
+           <p className="font-semibold hover:text-primary text-xs md:text-sm lg:text-base">Sign In</p>
           </Link>
         )}
       </div>

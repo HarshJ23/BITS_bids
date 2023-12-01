@@ -53,15 +53,14 @@ export default function page({params}) {
     return (
         <div>
             <Navbar/>
-            <h2>Bids by User</h2>
             <div className="overflow-x-auto relative shadow-md sm:rounded-lg m-8">
-    <p className='my-4 mx-8'>All bids placed on this product </p>
+    <p className='my-4 mx-8 font-extrabold text-2xl lg:text-4xl tracking-tight'>All bids placed by you!</p>
     <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-sm text-gray-700 uppercase bg-gray-100">
             <tr>
                 <th scope="col" className="py-3 px-6">Product ID</th>
                 <th scope="col" className="py-3 px-6">Bid Price</th>
-                <th scope="col" className="py-3 px-6">Date</th>
+                {/* <th scope="col" className="py-3 px-6">Date</th> */}
             </tr>
         </thead>
         <tbody>
@@ -69,7 +68,7 @@ export default function page({params}) {
                 <tr key={index} className="bg-white border-b hover:bg-gray-100 cursor-pointer" onClick={() => onRowClick(bid.id)} >
                     <td className="py-4 px-6">{bid.forWhichProductId}</td>
                     <td className="py-4 px-6">{bid.priceOfBid}</td>
-                    <td className="py-4 px-6">{bid.timestampOfCreation ? new Date(bid.timestampOfCreation).toLocaleDateString() : 'N/A'}</td>
+                    {/* <td className="py-4 px-6">{bid.timestampOfCreation ? new Date(bid.timestampOfCreation).toLocaleDateString() : "2/12/2023"}</td> */}
                 </tr>
             ))}
         </tbody>

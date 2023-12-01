@@ -215,18 +215,18 @@ export default function page({params}) {
             </div>
             </div>
 
-            {shouldShowChat && (
+            {/* {shouldShowChat && (
             <>
                 <div className="flex flex-row gap-4 m-8">
                     <Button onClick={toggleChatModal}>Chat </Button>
                 </div>
             </>
-        )}  
+        )}   */}
     </section>
 
-{isChatOpen && shouldShowChat && (
+{/* {isChatOpen && shouldShowChat && (
     <ChatModal isChatOpen={isChatOpen} toggleChatModal={toggleChatModal} sellerEmail={individualListing.userCreatedEmailId} buyerEmail={session?.user?.email} productId={params.id} isSold={individualListing.isSold}/>
-)}    
+)}     */}
         
 
     </div>

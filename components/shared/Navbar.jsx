@@ -51,12 +51,12 @@ const [allProducts, setAllProducts] = useState([]);
     const fuseOptions = {
       includeScore: true,
       includeMatches: true,
-      threshold: 0.6,
+      threshold: 0.2,
       distance: 100,
       useExtendedSearch: true,
-      minMatchCharLength: 3,
+      minMatchCharLength: 4,
       keys: [
-        { name: 'name', weight: 0.7 },
+        { name: 'name', weight: 0.9 },
         { name: 'details', weight: 0.7 }
       ],
       shouldSort: true,

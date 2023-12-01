@@ -106,16 +106,15 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-2">
                 <div className="bg-gradient-to-r from-blue-600 to-blue-800 p-4 rounded-t-2xl flex justify-between items-center">
                     <p className="text-white text-xl font-semibold">Chat </p>
-     {isSold &&  (<div className='mx-3'>
+     {isSold == 1 ?  (<div className='mx-3'>
     <p className='text-xs my-1  text-white'>Buyer: <span>{buyerEmail}</span></p>
     <p className='text-xs my-1  text-white'>Seller: <span>{sellerEmail}</span></p>
-</div>)}               
-
+</div>) : (<p></p>
+)}               
 
                     <Button 
                         onClick={toggleChatModal}
-                        className="text-white hover:text-blue-300 transition duration-200 text-2xl"
-                    >
+                        className="text-white hover:text-blue-300 transition duration-200 text-2xl">
                         &#10005; {/* Unicode for 'X' Close Button */}
                     </Button>
                 </div>

@@ -48,19 +48,19 @@ const router = useRouter();
 
     return (
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg m-8">
-            <p className='my-4 mx-8'>All bids placed on this product </p>
+            <p className='my-4 mx-8'>All bids placed on this product</p>
             <table className="w-full text-sm text-left text-gray-500">
                 <thead className="text-sm text-gray-700 uppercase bg-gray-100">
                     <tr>
-                        <th scope="col" className="py-3 px-6">Bids</th>
-                        <th scope="col" className="py-3 px-6">Date</th>
+                        <th scope="col" className="py-3 px-6">Bids (in Rupees)</th>
+                        {/* <th scope="col" className="py-3 px-6">Date</th> */}
                     </tr>
                 </thead>
                 <tbody>
                     {bidDetails.map((bid, index) => (
                         <tr key={index} className="bg-white border-b hover:bg-gray-100 cursor-pointer" onClick={() => onRowClick(bid.id)} >
-                            <td className="py-4 px-6">{bid.priceOfBid}</td>
-                            <td className="py-4 px-6">{new Date(bid.timestamp).toLocaleDateString()}</td>
+                            <td className="py-4 px-6">{bid.priceOfBid} Rupees</td>
+                            {/* <td className="py-4 px-6">{new Date(bid.timestamp).toLocaleDateString()}</td> */}
                         </tr>
                     ))}
                 </tbody>

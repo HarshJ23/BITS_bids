@@ -81,7 +81,7 @@ const EditProfileRoute = ()=>{
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="earned" className="text-right">
-              Earning
+              Earning(₹)
             </Label>
             <Input
               id="earned"
@@ -94,7 +94,7 @@ const EditProfileRoute = ()=>{
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="phone" className="text-right">
-              Expense
+              Expense(₹)
             </Label>
             <Input
               id="phone"

@@ -236,12 +236,12 @@ useEffect(()=>{
                 <div className="flex flex-row gap-6">
                     <div className="flex flex-col">
                         <p className="text-xl">Asking Price:</p>
-                        <h1 className='font-bold text-4xl tracking-tight'>{individualListing.price}</h1>
+                        <h1 className='font-bold text-4xl tracking-tight'>₹ {individualListing.price}</h1>
                     </div>
 
                     <div className="flex flex-col">
                         <p className="text-xl">Item sold for:</p>
-                        <h1 className='font-bold text-4xl tracking-tight'>{individualBid.priceOfBid}</h1>
+                        <h1 className='font-bold text-4xl tracking-tight'>₹ {individualBid.priceOfBid}</h1>
                     </div>
                 </div>
 
@@ -279,7 +279,7 @@ useEffect(()=>{
         {/* <p>({individualListing.soldToUserEmail})</p> */}
        
         <p className="text-muted-foreground mt-3">Seller : <span className="font-medium text-black ">{sellerData.name}</span></p>
-        <p className="text-muted-foreground mt-3">Sold for (Rupees) : <span className="font-bold text-black ">{individualListing.sellingPrice}</span></p>
+        <p className="text-muted-foreground mt-3">Sold for (Rupees) : <span className="font-bold text-black ">₹ {individualListing.sellingPrice}</span></p>
             <Link href="/"><Button className="mt-4">Check more items</Button></Link></>)}
             
         </div>

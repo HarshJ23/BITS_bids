@@ -27,7 +27,7 @@ export function ItemCard({ itemName, date, price, img }) {
             <p className="font-bold text-xl overflow-hidden text-ellipsis whitespace-nowrap">
               {itemName}
             </p>
-            <p className="text-base font-medium">Price: <span className="font-bold">{price}</span></p>
+            <p className="text-base font-medium">Price: <span className="font-bold">₹ {price}</span></p>
           <p className="font-medium text-sm">{new Date(date).toLocaleDateString()}</p>
           </div>
         </div>

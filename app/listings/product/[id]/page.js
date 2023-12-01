@@ -164,13 +164,13 @@ export default function page({params}) {
                 <div className="flex flex-row gap-6">
                     <div className="flex flex-col">
                         <p className="text-xl mt-3">Asking Price:</p>
-                        <h1 className='font-bold text-4xl tracking-tight'>{individualListing.price}</h1>
+                        <h1 className='font-bold text-4xl tracking-tight'>₹ {individualListing.price}</h1>
                     </div>
 
                     <div className="flex flex-col">
                       {!individualListing.isSold ? (<> <p className="text-xl mt-3">Highest Bid Placed:</p>
-                        <h1 className='font-bold text-4xl tracking-tight'>{highestBid}</h1></>):(<> <p className="text-xl mt-3">Sold for:</p>
-                        <h1 className='font-bold text-4xl tracking-tight'>{individualListing.sellingPrice}</h1></>)}
+                        <h1 className='font-bold text-4xl tracking-tight'>₹ {highestBid}</h1></>):(<> <p className="text-xl mt-3">Sold for:</p>
+                        <h1 className='font-bold text-4xl tracking-tight'>₹ {individualListing.sellingPrice}</h1></>)}
                        
                     </div>
                 </div>
@@ -195,7 +195,7 @@ export default function page({params}) {
         {/* <p>({individualListing.soldToUserEmail})</p> */}
        
         <p className="text-muted-foreground mt-3">Seller : <span className="font-medium text-black ">{userData.name}</span></p>
-        <p className="text-muted-foreground mt-3">Sold for (Rupees) : <span className="font-bold text-black ">{individualListing.sellingPrice}</span></p>
+        <p className="text-muted-foreground mt-3">Sold for (Rupees) : <span className="font-bold text-black ">₹ {individualListing.sellingPrice}</span></p>
         
         {
     (session && (session?.user?.email === individualListing.userCreatedEmailId || individualListing.soldToUserEmail)) ? (

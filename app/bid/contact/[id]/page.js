@@ -170,8 +170,8 @@ return (
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <p>Listed on : {individualProduct.createdOn}</p>
-                    <p className="text-red-500">Bid deadline : {individualProduct.deadline}</p>
+                    <p>Listed on : {new Date(individualProduct.createdOn).toLocaleDateString()}</p>
+                    <p className="text-red-500">Bid deadline : {new Date(individualProduct.deadline).toLocaleDateString()}</p>
                 </div>
                             
                     {!individualProduct.isSold ?  (

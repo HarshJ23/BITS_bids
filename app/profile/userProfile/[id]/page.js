@@ -52,6 +52,8 @@ export default function page({params}) {
   //for user purchases
   const [userPurchases , setUserPurchases] = useState([]);
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
 //   hook taken from /register/page.js
   useEffect(() => {
     if (!session) {
@@ -65,7 +67,7 @@ export default function page({params}) {
 useEffect(()=>{
     const getUser = async ()=>{
         try {
-            const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/getUserFromEmail?email=${email}` , {
+            const response = await fetch(`${apiUrl}/api/users/getUserFromEmail?email=${email}` , {
                 method : 'GET',
                 headers:{
                     'Baby' : '123',
@@ -90,7 +92,7 @@ useEffect(()=>{
   const getUserListings = async ()=>{
     setIsLoading(true); 
       try {
-        const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/getProductsOfUserFromEmail?email=${email}`,{
+        const response = await fetch(`${apiUrl}/api/product/getProductsOfUserFromEmail?email=${email}`,{
           method : 'GET',
           headers : {
             'Baby' : '123',
@@ -122,7 +124,7 @@ useEffect(()=>{
   const getUserPurchases = async ()=>{
     setIsLoading(true); 
       try {
-        const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/getItemsPurchasedOfUser?email=${email}`,{
+        const response = await fetch(`${apiUrl}/api/product/getItemsPurchasedOfUser?email=${email}`,{
           method : 'GET',
           headers : {
             'Baby' : '123',

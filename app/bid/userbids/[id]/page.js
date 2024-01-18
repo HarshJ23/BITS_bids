@@ -11,6 +11,7 @@ export default function page({params}) {
     const { data: session , status } = useSession();
     // const isLoad = stat === "loading";
     const [userBids, setAllUserBids] = useState([]);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
     useEffect(() => {
         if (status === "loading") return;
@@ -23,7 +24,7 @@ export default function page({params}) {
     useEffect(()=>{
         const getBidsOfUser = async ()=>{
             try {
-                const response = await fetch(`https://bitsbid.azurewebsites.net/api/bid/getBidsOfUserFromEmail?email=${params.id}`,{
+                const response = await fetch(`${apiUrl}/api/bid/getBidsOfUserFromEmail?email=${params.id}`,{
                     method : 'GET',
                     headers : {
                         'Baby' : '123',

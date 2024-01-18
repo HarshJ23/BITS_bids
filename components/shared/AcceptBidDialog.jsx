@@ -17,9 +17,11 @@ import {
 
     const router = useRouter();
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
     const handleSendPostRequest = async () => {
         try {
-            const response = await fetch( `https://bitsbid.azurewebsites.net/api/product/sellProduct?buyerEmail=${bidData.userCreatedEmailId}`, {
+            const response = await fetch( `${apiUrl}/api/product/sellProduct?buyerEmail=${bidData.userCreatedEmailId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

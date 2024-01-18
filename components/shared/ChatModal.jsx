@@ -11,6 +11,7 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
     const [currentMessage, setCurrentMessage] = useState("");
     const roomId = `${productId}${sellerEmail}${buyerEmail}`;
     const { data: session } = useSession();
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   
     useEffect(() => {
@@ -21,7 +22,7 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
             try {
                 // Encoding the roomId to ensure special characters are handled correctly in the URL
                 const encodedRoomId = encodeURIComponent(roomId);
-                const response = await fetch(`https://bitsbid.azurewebsites.net/api/chat/getAllMessagesForRoomId?roomId=${encodedRoomId}` , {
+                const response = await fetch(`${apiUrl}/api/chat/getAllMessagesForRoomId?roomId=${encodedRoomId}` , {
                     headers:{
                         "Baby" : "123",
                     }
@@ -45,7 +46,7 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
         fetchChatHistory();
     
         // WebSocket logic to handle new messages...
-        const socket = new SockJS('https://bitsbid.azurewebsites.net/ws');
+        const socket = new SockJS(`${apiUrl}/ws`);
         const client = Stomp.over(socket);
     
         client.connect({}, frame => {

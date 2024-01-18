@@ -7,10 +7,10 @@ import { useEffect, useRef } from 'react';
 export default function Page() {
 
   let allProducts = [];
-
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   // Fetch products on component mount
   useEffect(() => {
-    fetch('https://bitsbid.azurewebsites.net/api/product/getAllProducts',{
+    fetch(`${apiUrl}/api/product/getAllProducts`,{
       headers:{
         'Baby' : '123'
       }

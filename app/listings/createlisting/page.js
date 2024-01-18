@@ -42,6 +42,7 @@ export default function CreateListing() {
   const [userEmail , setUserEmail] =  useState(); 
   const [isLoading , setIsLoading ] = useState(false);
   // const isLoad = status === "loading";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   const isFormValid =
   formData.name &&
@@ -122,7 +123,7 @@ export default function CreateListing() {
       console.log('Sending data:', dataToSend);
       
       try {
-        const response = await fetch('https://bitsbid.azurewebsites.net/api/product/createProduct', {
+        const response = await fetch(`${apiUrl}/api/product/createProduct`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -12,6 +12,7 @@ export default function BidForm({ productId , askingPrice }) {
     const [bidAmount, setBidAmount] = useState('');
     const [isBidPlaced, setIsBidPlaced] = useState(false); // New state to track bid status
     const router = useRouter();
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +25,7 @@ export default function BidForm({ productId , askingPrice }) {
         };
 
         try {
-            const response = await fetch('https://bitsbid.azurewebsites.net/api/bid/createBid', {
+            const response = await fetch(`${apiUrl}/api/bid/createBid`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

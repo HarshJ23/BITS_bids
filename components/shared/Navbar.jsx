@@ -16,6 +16,7 @@ const [allProducts, setAllProducts] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const { data: session } = useSession();
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
     // Function to toggle mobile menu
     const toggleMobileMenu = () => {
@@ -29,7 +30,7 @@ const [allProducts, setAllProducts] = useState([]);
     useEffect(() => {
         const getListings = async () => {
             try {
-                const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/getAllUnsoldProducts`, {
+                const response = await fetch(`${apiUrl}/api/product/getAllUnsoldProducts`, {
                     method: 'GET',
                     headers: {
                         'Baby': '123',

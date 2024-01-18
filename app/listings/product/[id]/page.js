@@ -57,10 +57,13 @@ export default function page({params}) {
 
       const [highestBid, setHighestBid] = useState(0);
 
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
+
     useEffect(()=>{
       const getListingbyId = async ()=>{
             try {
-              const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/${params.id}`,{
+              const response = await fetch(`${apiUrl}/api/product/${params.id}`,{
                 method : 'GET',
                 headers : {
                   'Baby' : '123',
@@ -87,7 +90,7 @@ export default function page({params}) {
       useEffect(()=>{
         const getUser = async ()=>{
             try {
-                const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/getUserFromEmail?email=${individualListing.userCreatedEmailId}` , {
+                const response = await fetch(`${apiUrl}/api/users/getUserFromEmail?email=${individualListing.userCreatedEmailId}` , {
                     method : 'GET',
                     headers:{
                         'Baby' : '123',
@@ -112,7 +115,7 @@ export default function page({params}) {
     useEffect(() => {
       const fetchBids = async () => {
           try {
-              const response = await fetch(`https://bitsbid.azurewebsites.net/api/bid/getBidsOnProduct?productId=${params.id}` ,{
+              const response = await fetch(`${apiUrl}/api/bid/getBidsOnProduct?productId=${params.id}` ,{
                 headers:{
                   "Baby" : "123",
                 }

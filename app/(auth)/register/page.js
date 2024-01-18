@@ -75,7 +75,7 @@ export default function Register() {
     const registerHandler = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://bitsbids.azurewebsites.net/api/users/createUser', {
+            const response = await fetch('https://bitsbid.azurewebsites.net/api/users/createUser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export default function Register() {
     // Function to check if user exists
     const checkUserExists = async (email) => {
         try {
-            const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/existsByEmail?email=${email}`, {
+            const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/existsByEmail?email=${email}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

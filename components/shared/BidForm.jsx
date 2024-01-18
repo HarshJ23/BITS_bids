@@ -24,7 +24,7 @@ export default function BidForm({ productId , askingPrice }) {
         };
 
         try {
-            const response = await fetch('https://bitsbids.azurewebsites.net/api/bid/createBid', {
+            const response = await fetch('https://bitsbid.azurewebsites.net/api/bid/createBid', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,9 +94,9 @@ export default function BidForm({ productId , askingPrice }) {
                 </>
             ) : (
                 <>
-                    <CardContent>
-                        <CardTitle className="">Please Sign in to continue with the item</CardTitle>
-                    </CardContent> 
+                    <div className="w-2/3">
+                        <h1 className=" font-semibold text-sm md:text-base lg:text-2xl">Please Sign in to continue with the item</h1>
+                    </div> 
                 </>
             )}
         </Card>

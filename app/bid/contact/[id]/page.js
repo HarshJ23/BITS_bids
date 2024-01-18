@@ -68,7 +68,7 @@ export default function page({params}) {
 useEffect(()=>{
 const getDetails = async ()=>{
 try {
-    const response = await fetch(`https://bitsbids.azurewebsites.net/api/bid/${bidId}`,{
+    const response = await fetch(`https://bitsbid.azurewebsites.net/api/bid/${bidId}`,{
         method : 'GET',
         headers:{
             'Baby' : '123'
@@ -92,7 +92,7 @@ useEffect(() => {
     const getProductDetails = async () => {
         if (individualBid.forWhichProductId) {
             try {
-                const response = await fetch(`https://bitsbids.azurewebsites.net/api/product/${individualBid.forWhichProductId}`, {
+                const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/${individualBid.forWhichProductId}`, {
                     method: 'GET',
                     headers: {
                         'Baby': '123'
@@ -117,7 +117,7 @@ const shouldShowChat = session?.user?.email === individualBid.userCreatedEmailId
 useEffect(()=>{
     const getUser = async ()=>{
         try {
-            const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/getUserFromEmail?email=${individualProduct.userCreatedEmailId}` , {
+            const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/getUserFromEmail?email=${individualProduct.userCreatedEmailId}` , {
                 method : 'GET',
                 headers:{
                     'Baby' : '123',

@@ -65,7 +65,7 @@ export default function page({params}) {
 useEffect(()=>{
     const getUser = async ()=>{
         try {
-            const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/getUserFromEmail?email=${email}` , {
+            const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/getUserFromEmail?email=${email}` , {
                 method : 'GET',
                 headers:{
                     'Baby' : '123',
@@ -90,7 +90,7 @@ useEffect(()=>{
   const getUserListings = async ()=>{
     setIsLoading(true); 
       try {
-        const response = await fetch(`https://bitsbids.azurewebsites.net/api/product/getProductsOfUserFromEmail?email=${email}`,{
+        const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/getProductsOfUserFromEmail?email=${email}`,{
           method : 'GET',
           headers : {
             'Baby' : '123',
@@ -122,7 +122,7 @@ useEffect(()=>{
   const getUserPurchases = async ()=>{
     setIsLoading(true); 
       try {
-        const response = await fetch(`https://bitsbids.azurewebsites.net/api/product/getItemsPurchasedOfUser?email=${email}`,{
+        const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/getItemsPurchasedOfUser?email=${email}`,{
           method : 'GET',
           headers : {
             'Baby' : '123',

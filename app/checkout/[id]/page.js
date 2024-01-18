@@ -96,7 +96,7 @@ const [individualListing, setIndividualListing] = useState({
 useEffect(()=>{
     const getDetails = async ()=>{
     try {
-        const response = await fetch(`https://bitsbids.azurewebsites.net/api/bid/${bidId}`,{
+        const response = await fetch(`https://bitsbid.azurewebsites.net/api/bid/${bidId}`,{
             method : 'GET',
             headers:{
                 'Baby' : '123'
@@ -122,7 +122,7 @@ console.log(individualBid);
 useEffect(()=>{
     const getListingbyId = async ()=>{
         try {
-          const response = await fetch(`https://bitsbids.azurewebsites.net/api/product/${individualBid.forWhichProductId}`,{
+          const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/${individualBid.forWhichProductId}`,{
             method : 'GET',
             headers : {
               'Baby' : '123',
@@ -150,7 +150,7 @@ useEffect(()=>{
     useEffect(()=>{
         const getBuyer = async ()=>{
             try {
-                const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/getUserFromEmail?email=${individualBid.userCreatedEmailId}` , {
+                const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/getUserFromEmail?email=${individualBid.userCreatedEmailId}` , {
                     method : 'GET',
                     headers:{
                         'Baby' : '123',
@@ -172,7 +172,7 @@ useEffect(()=>{
     useEffect(()=>{
         const getSeller = async ()=>{
             try {
-                const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/getUserFromEmail?email=${individualListing.userCreatedEmailId}` , {
+                const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/getUserFromEmail?email=${individualListing.userCreatedEmailId}` , {
                     method : 'GET',
                     headers:{
                         'Baby' : '123',

@@ -122,7 +122,7 @@ export default function CreateListing() {
       console.log('Sending data:', dataToSend);
       
       try {
-        const response = await fetch('https://bitsbids.azurewebsites.net/api/product/createProduct', {
+        const response = await fetch('https://bitsbid.azurewebsites.net/api/product/createProduct', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

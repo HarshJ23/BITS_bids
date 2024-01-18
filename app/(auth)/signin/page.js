@@ -10,7 +10,7 @@ export default function Page() {
 
   // Fetch products on component mount
   useEffect(() => {
-    fetch('https://bitsbids.azurewebsites.net/api/product/getAllProducts',{
+    fetch('https://bitsbid.azurewebsites.net/api/product/getAllProducts',{
       headers:{
         'Baby' : '123'
       }

@@ -21,7 +21,7 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
             try {
                 // Encoding the roomId to ensure special characters are handled correctly in the URL
                 const encodedRoomId = encodeURIComponent(roomId);
-                const response = await fetch(`https://bitsbids.azurewebsites.net/api/chat/getAllMessagesForRoomId?roomId=${encodedRoomId}` , {
+                const response = await fetch(`https://bitsbid.azurewebsites.net/api/chat/getAllMessagesForRoomId?roomId=${encodedRoomId}` , {
                     headers:{
                         "Baby" : "123",
                     }
@@ -45,7 +45,7 @@ const ChatModal = ({ isChatOpen, toggleChatModal, sellerEmail, buyerEmail, produ
         fetchChatHistory();
     
         // WebSocket logic to handle new messages...
-        const socket = new SockJS('https://bitsbids.azurewebsites.net/ws');
+        const socket = new SockJS('https://bitsbid.azurewebsites.net/ws');
         const client = Stomp.over(socket);
     
         client.connect({}, frame => {

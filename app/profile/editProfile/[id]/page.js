@@ -65,7 +65,7 @@ export default function page({params}) {
 useEffect(()=>{
     const getUser = async ()=>{
         try {
-            const response = await fetch(`https://bitsbids.azurewebsites.net/api/users/getUserFromEmail?email=${email}` , {
+            const response = await fetch(`https://bitsbid.azurewebsites.net/api/users/getUserFromEmail?email=${email}` , {
                 method : 'GET',
                 headers:{
                     'Baby' : '123',
@@ -90,7 +90,7 @@ const editProfileHandler= async (e)=>{
   e.preventDefault();
   setIsLoading(true); // Start loading
   try {
-    const response = await fetch('https://bitsbids.azurewebsites.net/api/users/createUser', {
+    const response = await fetch('https://bitsbid.azurewebsites.net/api/users/createUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

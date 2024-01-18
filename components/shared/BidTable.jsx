@@ -16,7 +16,7 @@ const router = useRouter();
             for (const bidId of bids) {
                 try {
                     console.log(`Fetching details for bid ID: ${bidId}`); // Debug: Log each bid ID being fetched
-                    const response = await fetch(`https://bitsbids.azurewebsites.net/api/bid/${bidId}`,{
+                    const response = await fetch(`https://bitsbid.azurewebsites.net/api/bid/${bidId}`,{
                         headers:{
                             'Baby' : '123'
                         }

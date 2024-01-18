@@ -26,7 +26,7 @@ export default function Home() {
       setIsLoading(true); 
 
         try {
-            const response = await fetch(`https://bitsbids.azurewebsites.net/api/product/getAllUnsoldProducts` , {
+            const response = await fetch(`https://bitsbid.azurewebsites.net/api/product/getAllUnsoldProducts` , {
                 method : 'GET',
                 headers:{
                     'Baby' : '123',

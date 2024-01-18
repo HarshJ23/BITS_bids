@@ -19,7 +19,7 @@ import {
 
     const handleSendPostRequest = async () => {
         try {
-            const response = await fetch( `https://bitsbids.azurewebsites.net/api/product/sellProduct?buyerEmail=${bidData.userCreatedEmailId}`, {
+            const response = await fetch( `https://bitsbid.azurewebsites.net/api/product/sellProduct?buyerEmail=${bidData.userCreatedEmailId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
